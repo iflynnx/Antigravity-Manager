@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next';
 
 function AccountRow({ account, selected, onSelect, isCurrent, isRefreshing, isSwitching = false, onSwitch, onRefresh, onViewDetails, onExport, onDelete }: AccountRowProps) {
     const { t } = useTranslation();
-    const geminiModel = account.quota?.models.find(m => m.name.toLowerCase().includes('gemini'));
+    const geminiModel = account.quota?.models.find(m => m.name.toLowerCase().includes('gemini-3-pro-high'));
     const claudeModel = account.quota?.models.find(m => m.name.toLowerCase().includes('claude'));
 
     // 颜色映射，避免动态类名被 Tailwind purge

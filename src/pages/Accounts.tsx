@@ -68,13 +68,13 @@ function Accounts() {
         // 状态过滤
         if (filter === 'available') {
             result = result.filter(a => {
-                const gemini = a.quota?.models.find(m => m.name.toLowerCase().includes('gemini'))?.percentage || 0;
+                const gemini = a.quota?.models.find(m => m.name.toLowerCase().includes('gemini-3-pro-high'))?.percentage || 0;
                 const claude = a.quota?.models.find(m => m.name.toLowerCase().includes('claude'))?.percentage || 0;
                 return gemini >= 20 && claude >= 20;
             });
         } else if (filter === 'low') {
             result = result.filter(a => {
-                const gemini = a.quota?.models.find(m => m.name.toLowerCase().includes('gemini'))?.percentage || 0;
+                const gemini = a.quota?.models.find(m => m.name.toLowerCase().includes('gemini-3-pro-high'))?.percentage || 0;
                 const claude = a.quota?.models.find(m => m.name.toLowerCase().includes('claude'))?.percentage || 0;
                 return gemini < 20 || claude < 20;
             });

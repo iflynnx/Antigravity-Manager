@@ -1,8 +1,8 @@
+mod commands;
+pub mod error;
 mod models;
 mod modules;
-mod commands;
 mod utils;
-pub mod error;
 
 use modules::logger;
 
@@ -16,11 +16,18 @@ fn greet(name: &str) -> String {
 pub fn run() {
     // 初始化日志
     logger::init_logger();
-    
+
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+            use tauri::Manager;
+            if let Some(window) = app.get_webview_window("main") {
+                let _ = window.show();
+                let _ = window.set_focus();
+            }
+        }))
         .setup(|app| {
             modules::tray::create_tray(app.handle())?;
             Ok(())
@@ -31,7 +38,10 @@ pub fn run() {
                 #[cfg(target_os = "macos")]
                 {
                     use tauri::Manager;
-                    window.app_handle().set_activation_policy(tauri::ActivationPolicy::Accessory).unwrap_or(());
+                    window
+                        .app_handle()
+                        .set_activation_policy(tauri::ActivationPolicy::Accessory)
+                        .unwrap_or(());
                 }
                 api.prevent_close();
             }
