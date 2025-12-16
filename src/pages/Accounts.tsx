@@ -156,8 +156,6 @@ function Accounts() {
         });
         try {
             await refreshQuota(accountId);
-            await refreshQuota(accountId);
-            await refreshQuota(accountId);
             showToast(t('common.success'), 'success');
         } catch (error) {
             showToast(`${t('common.error')}: ${error}`, 'error');
@@ -181,7 +179,6 @@ function Accounts() {
             const ids = Array.from(selectedIds);
             console.log('[Accounts] Batch deleting:', ids);
             await Promise.all(ids.map(id => deleteAccount(id)));
-            setSelectedIds(new Set());
             setSelectedIds(new Set());
             console.log('[Accounts] Batch delete success');
             showToast(t('common.success'), 'success');
